@@ -9,8 +9,7 @@ exports.create = async (req, res) => {
     await db.query('INSERT INTO Album (name, year, artistId) VALUES (?, ?, ?)', [
       name,
       year,
-      artistId
-    ])
+      artistId])
 
     res.sendStatus(201)
   } catch (err) {

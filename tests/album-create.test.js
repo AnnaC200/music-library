@@ -5,8 +5,20 @@ const app = require('../src/app')
 
 describe('create album', () => {
   let db
-  //  establishing connection to db before each test
-  beforeEach(async () => (db = await getDb()))
+  let artist
+  beforeEach(async () => {
+    db = await getDb()
+    await 
+      db.query('INSERT INTO Artist (name, genre) VALUES(?, ?)', [
+      'Spice Girls',
+      'pop'
+   ])
+  const myArtist = await db.query('SELECT * FROM ARTIST')
+  console.log(myArtist)
+  // artist=myArtist[0][0]
+  }
+  
+  
   // uses db.query to delete all the artists in the Artist table then closes the connection to the database
   afterEach(async () => {
     await db.query('DELETE FROM Album')
@@ -17,6 +29,7 @@ describe('create album', () => {
     describe('POST', () => {
       it('creates a new album associated to an artist in the database', async () => {
         const res = await request(app).post('/artist/:artistId/album').send({
+          // template literal artist/artist.id/album
           name: 'Spice World',
           year: '1997'
         })
